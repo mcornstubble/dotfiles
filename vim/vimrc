@@ -1,0 +1,105 @@
+" ========= Setup ========
+
+set nocompatible
+
+if &shell == "/usr/bin/sudosh"
+  set shell=/bin/bash
+endif
+
+" Color
+colorscheme vibrantink
+
+" Status line  Colors
+au InsertEnter * hi statusline ctermfg=black ctermbg=red
+au InsertLeave * hi statusline ctermfg=black ctermbg=green
+au VimEnter * hi statusline ctermfg=black ctermbg=green
+
+" Status line
+set laststatus=2
+set statusline=
+set statusline+=%<\                       " cut at start
+set statusline+=%2*[%n%H%M%R%W]%*\        " buffer number, and flags
+set statusline+=%-40f\                    " relative path
+set statusline+=%=                        " seperate between right- and left-aligned
+set statusline+=%1*%y%*%*\                " file type
+set statusline+=%10(L(%l/%L)%)\           " line
+set statusline+=%2(C(%v/125)%)\           " column
+set statusline+=%P                        " percentage of file
+
+" ========= Options ========
+syntax on
+set hlsearch
+set number
+set showmatch
+set incsearch
+set background=dark
+set hidden
+set backspace=indent,eol,start
+set textwidth=0 nosmartindent tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+set ruler
+set wrap
+set ignorecase
+set smartcase
+set expandtab
+set smarttab
+set ai "Auto indent
+set si "Smart indent
+set wrap "Wrap lines
+set mouse=
+if !has('nvim')
+  set ttymouse=
+endif
+
+
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" Show matching brackets when text indicator is over them
+set showmatch 
+" How many tenths of a second to blink when matching brackets
+set mat=2
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+
+" Enable syntax highlighting
+syntax enable 
+
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+
+" Turn backup off, since most stuff is in SVN, git et.c anyway...
+set nobackup
+set nowb
+set noswapfile
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+" Remember info about open buffers on close
+set viminfo^=%
+
+"-------- Local Overrides
+"If you have options you'd like to override locally for some reason (don't
+"want to store something in a publicly-accessible repository, machine-specific
+"settings, etc.), you can create a '.local_vimrc' file in your home directory
+"(ie: ~/.vimrc_local) and it will be 'sourced' here and override any settings
+"in this file or the above global setting.
+"
+"NOTE: DO NOT ADD ANY LINES BELOW THIS
+if filereadable(expand('~/.vimrc_local'))
+  source ~/.vimrc_local
+end
