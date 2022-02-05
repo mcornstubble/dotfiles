@@ -1,0 +1,61 @@
+autoload -U compinit
+compinit
+autoload -U colors
+colors
+zmodload -i zsh/complist
+
+HISTSIZE=20000
+HISTFILE=${HOME}/.zsh_history
+SAVEHIST=20000
+export EDITOR="vim"
+export PATH="$HOME/.bin:/usr/local/bin:/sbin:/usr/local/sbin:/opt/local/bin:/opt:/usr/sbin:$PATH"
+
+#COLORS
+export RED=$'%{\e[1;31m%}'
+export GREEN=$'%{\e[1;32m%}'
+export BLUE=$'%{\e[1;34m%}'
+export PURPLE=$'%{\e[1;35m%}'
+export CYAN=$'%{\e[1;36m%}'
+export WHITE=$'%{\e[1;37m%}'
+export NC=$'%{\e[0m%}'
+export YELLOW=$'%{\e[1;33m%}'
+export BLACK=$'%{\e[0;30m%}'
+export GRAY=$'%{\e[1;30m%}'
+
+#PROMPT
+PROMPT='${NC}${RED}[%n${RED}@${RED}%m]~%%${NC}'
+RPROMPT='${NC}${RED}[%d]${NC}'
+
+# stop f-keys from writing things to the terminal (and other odd stuff)
+bindkey -s '\e[11~' ''
+bindkey -s '\e[12~' ''
+bindkey -s '\e[13~' ''
+bindkey -s '\e[14~' ''
+bindkey -s '\e[15~' ''
+bindkey -s '\e[17~' ''
+bindkey -s '\e[18~' ''
+bindkey -s '\e[19~' ''
+bindkey -s '\e[20~' ''
+bindkey -s '\e[23~' ''
+bindkey -s '\e[24~' ''
+
+setopt correct
+setopt prompt_subst
+setopt no_nomatch # passes * to the program if no match
+
+#Expansion
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' expand 'yes'
+zstyle ':completion:*' squeeze-slashes 'yes'
+
+compctl -g "*.tar *.tgz *.tz *.tar.Z *.tar.bz2 *.tZ *.tar.gz" \
+        + -g "*(-/) .*(-/)" tar
+
+export LS_COLORS='no=00:fi=00:di=1;34:ln=04;35:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=04;37:*.tgz=04;37:*.arj=04;37:*.taz=04;37:*.lzh=04;37:*.zip=04;37:*.z=04;37:*.Z=04;37:*.gz=04;37:*.bz2=04;37:*.deb=04;37:*.rpm=04;37:*.css=01;33:*.html=01;33:*.htm=01;33:*.php=01;33:*.c=01;33:*.cc=01;33:*.cpp=01;33:*.pl=01;33:*.h=01;33:*.java=01;33:*.txt=01;37:*.jpg=36:*.gif=36:*.bmp=36:*.ppm=36:*.tga=36:*.xbm=36:*.xpm=36:*.tif=36:*.png=36:*.fli=36:*.gl=36:*.dl=36:*.mpg=01;35:*.mpeg=01;35:*.wmv=01;35:*.mov=01;35:*.avi=01;35:';
+
+#flashing block cursor
+echo -ne '\033[?6c'
+
+#Welcome Screen
+echo "Hello, Operator."; date; uptime;
+
